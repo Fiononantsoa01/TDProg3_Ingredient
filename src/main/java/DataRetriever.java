@@ -29,4 +29,35 @@ public class DataRetriever {
             throw new RuntimeException(e);
         }
     }
+    List<Ingredient> findIngredients(int page , int size) {
+        DBConnection dbConnection = new DBConnection();
+        Connection connection = dbConnection.getConnection();
+    try {
+
+        List<Ingredient> ingredients = new ArrayList<>();
+        int offset = (page - 1) * size;
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                 "select id, name, price , category ,id_dish from ingredient order by id limit ? offset ?"
+            );
+            preparedStatement.setInt(1,size);
+            preparedStatement.setInt(2,offset);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Ingredient ingredient=new Ingredient(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getDouble("price"),
+                        CategoryEnum.valueOf(resultSet.getString("category")),
+                        null
+
+                );
+                ingredients.add(ingredient);
+            }
+        dbConnection.closeConnection(connection);
+        return ingredients;
+    }
+    catch (SQLException e){
+        throw new RuntimeException(e);
+    }
+}
 }
