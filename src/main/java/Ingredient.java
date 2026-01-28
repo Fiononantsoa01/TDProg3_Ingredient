@@ -1,28 +1,27 @@
 import java.util.Objects;
 
 public class Ingredient {
- private int id;
- private String name;
- private Double price;
- private CategoryEnum category;
- private Dish dish;
+    private Integer id;
+    private String name;
+    private CategoryEnum category;
+    private Double price;
 
- public  String getDishName() {
-     return name;
- }
-    public Ingredient(int id, String name, Double price, CategoryEnum category, Dish dish) {
+    public Ingredient(Integer id, String name, CategoryEnum category, Double price) {
         this.id = id;
         this.name = name;
-        this.price = price;
         this.category = category;
-        this.dish = dish;
+        this.price = price;
     }
 
-    public int getId() {
+    public Ingredient() {
+
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -34,14 +33,6 @@ public class Ingredient {
         this.name = name;
     }
 
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
     public CategoryEnum getCategory() {
         return category;
     }
@@ -50,24 +41,24 @@ public class Ingredient {
         this.category = category;
     }
 
-    public Dish getDish() {
-        return dish;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setDish(Dish dish) {
-        this.dish = dish;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Ingredient that = (Ingredient) o;
-        return id == that.id && Objects.equals(name, that.name) && Objects.equals(price, that.price) && category == that.category && Objects.equals(dish, that.dish);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && category == that.category && Objects.equals(price, that.price);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price, category, dish);
+        return Objects.hash(id, name, category, price);
     }
 
     @Override
@@ -75,10 +66,8 @@ public class Ingredient {
         return "Ingredient{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", price=" + price +
                 ", category=" + category +
-                ", dish=" + dish +
+                ", price=" + price +
                 '}';
     }
 }
-

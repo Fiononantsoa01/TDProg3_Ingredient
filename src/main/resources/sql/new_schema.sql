@@ -1,12 +1,13 @@
 ALTER TABLE ingredient
 DROP COLUMN IF EXISTS id_dish;
+create type unit_type as enum ('PCS', 'KG', 'L');
 
 CREATE TABLE IF NOT EXISTS DishIngredient (
                                                id SERIAL PRIMARY KEY,
                                                id_dish INT NOT NULL REFERENCES dish(id) ON DELETE CASCADE,
     id_ingredient INT NOT NULL REFERENCES ingredient(id) ON DELETE CASCADE,
     quantity_required NUMERIC(10,2) NOT NULL,
-    unit varchar(2)
+    unit unit_type
     );
 
 INSERT INTO dishingredient (id_dish, id_ingredient, quantity_required, unit)
