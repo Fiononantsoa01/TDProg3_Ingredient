@@ -2,7 +2,8 @@ insert into dish values(1,'slade fraiche','START'),
                        (2,'poulet grille','MAIN'),
                        (3,'riz au legume','MAIN'),
                        (4,'gateaux aux chocolats','DESSERT'),
-                       (5,'salade de fruits','DESSERT')
+                       (5,'salade de fruits','DESSERT');
+update  dish set name = 'salade fraiche ' where id=1;
 insert into ingredient values(1,'laitue',800.00,'VEGETABLE',1),
                              (2,'tomate',600.00,'VEGETABLE',1),
                              (3,'poulet',4500.00,'ANIMAL',2),
