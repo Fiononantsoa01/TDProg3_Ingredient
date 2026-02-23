@@ -1,25 +1,10 @@
-insert into dish (id, name, dish_type)
-values (1, 'Salaide fraîche', 'STARTER'),
-       (2, 'Poulet grillé', 'MAIN'),
-       (3, 'Riz aux légumes', 'MAIN'),
-       (4, 'Gâteau au chocolat ', 'DESSERT'),
-       (5, 'Salade de fruits', 'DESSERT');
-
-
-insert into ingredient (id, name, category, price, id_dish)
-values (1, 'Laitue', 'VEGETABLE', 800.0, 1),
-       (2, 'Tomate', 'VEGETABLE', 600.0, 1),
-       (3, 'Poulet', 'ANIMAL', 4500.0, 2),
-       (4, 'Chocolat ', 'OTHER', 3000.0, 4),
-       (5, 'Beurre', 'DAIRY', 2500.0, 4);
-
-
-
-update dish
-set price = 2000.0
-where id = 1;
-
-update dish
-set price = 6000.0
-where id = 2;
-
+insert into dish values(1,'slade fraiche','START'),
+                       (2,'poulet grille','MAIN'),
+                       (3,'riz au legume','MAIN'),
+                       (4,'gateaux aux chocolats','DESSERT'),
+                       (5,'salade de fruits','DESSERT')
+insert into ingredient values(1,'laitue',800.00,'VEGETABLE',1),
+                             (2,'tomate',600.00,'VEGETABLE',1),
+                             (3,'poulet',4500.00,'ANIMAL',2),
+                             (4,'chocolat',3000.00,'OTHER',4),
+                             (5,'beurre',2500.00,'DAIRY',4)
