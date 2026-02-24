@@ -94,4 +94,69 @@ public List<Dish>  findDishsByIngredientName(String ingredientName) {
         throw new RuntimeException("error in findDishsByIngredientName "+e);
     }
 }
+    // question 6-f
+public List<Ingredient> findIngredientByCriteria( String ingredientName, String dishName , CategoryEnum category, int page, int size) {
+    DBConnection db = new DBConnection();
+    Connection conn = db.getConnection();
+    if (page<0 ){page=1;}
+    if(size<0){size=10;}
+    if (size>80){size =40;}
+    int offset = (page-1)*size;
+    List<Ingredient> ingredients = new ArrayList<>();
+    try {
+        String sql = """
+            SELECT i.id, i.name, i.category,
+                   d.id AS dish_id, d.name AS dish_name
+            FROM ingredient i
+            INNER JOIN dish d ON d.id = i.id_dish
+            WHERE 1=1
+        """;
+        if(ingredientName!=null&&!ingredientName.isEmpty()){
+            sql+= " AND LOWER(i.name) LIKE LOWER(?)";
+        }
+        if (category != null) {
+            sql += " AND i.category = ? ";
+        }
+
+        if (dishName != null && !dishName.isEmpty()) {
+            sql += " AND LOWER(d.name) LIKE LOWER(?) ";
+        }
+
+        sql += " LIMIT ? OFFSET ? ";
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+        int index = 1;
+
+        if (ingredientName != null && !ingredientName.isEmpty()) {
+            ps.setString(index++, "%" + ingredientName + "%");
+        }
+
+        if (category != null) {
+            ps.setObject(index++, category.name(), java.sql.Types.OTHER);
+        }
+
+        if (dishName != null && !dishName.isEmpty()) {
+            ps.setString(index++, "%" + dishName + "%");
+        }
+
+        ps.setInt(index++, size);
+        ps.setInt(index, offset);
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            Dish dish = new Dish();
+            dish.setId(rs.getInt("id"));
+            dish.setName(rs.getString("dish_name"));
+            Ingredient ingredient = new Ingredient();
+            ingredient.setName(rs.getString("name"));
+            ingredient.setCategory(CategoryEnum.valueOf(rs.getString("category")));
+            ingredient.setDish(dish);
+            ingredients.add(ingredient);
+        }
+        conn.close();
+    }catch (SQLException e){
+        throw  new RuntimeException("error in findIngredientByCriteria "+e);
+    }
+    return ingredients;
+}
 }

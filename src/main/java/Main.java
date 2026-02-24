@@ -11,5 +11,7 @@ public class Main {
         System.out.println(ingredients2);
         List<Dish> dishes=d.findDishsByIngredientName("eur");
         System.out.println(dishes);
+        List<Ingredient> findedIngredient= d.findIngredientByCriteria("cho", "sal",CategoryEnum.VEGETABLE,1,10);
+        System.out.println(findedIngredient);
     }
 }
